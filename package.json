@@ -1,0 +1,132 @@
+{
+  "name": "deepseek-gp-vscode",
+  "displayName": "deepseek-gp-vscode",
+  "description": "Prompt Created by DeepSeek and GBP, Integrates DeepSeek into VSCode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "deepseek-vscode.configureDeepSeek",
+        "title": "DeepSeek Config"
+      },
+      {
+        "command": "deepseek-vscode.openChat",
+        "title": "DeepSeek Floating Chat",
+        "icon": "src/assets/button-icon.svg"
+      },
+      {
+        "command": "deepseek-vscode.askDeepSeek",
+        "title": "Ask DeepSeek"
+      }
+    ],
+    "configuration": {
+      "title": "DeepSeek",
+      "properties": {
+        "deepseek.accountType": {
+          "type": "string",
+          "enum": [
+            "cloud",
+            "self-hosted"
+          ],
+          "default": "self-hosted",
+          "description": "Choose to connect with your DeepSeek cloud account or self-host DeepSeek R1. Dont forget to configure your DeepSeek model options or provide your API key."
+        },
+        "deepseek.optionalCloudApiKey": {
+          "type": "string",
+          "default": "Only for cloud option..",
+          "description": "Your API key for your DeepSeek cloud account."
+        },
+        "deepseek.aiR1SelfHostedUrl": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Change to suit your URL, otherwise this is the default runner URL for Ollama, defaults to http://localhost:11434."
+        },
+        "deepseek.aiR1Model": {
+          "type": "string",
+          "default": "deepseek-r1:7b",
+          "description": "Specify the DeepSeek model you are using (e.g., deepseek-r1:14b), defaults to deepseek-r1:7b."
+        },
+        "deepseek.aiR1ModelTemperature": {
+          "type": "number",
+          "default": 0.3,
+          "description": "(Works for both 'cloud' and 'self-hosted') Specify the temperature for the DeepSeek model, 0.0 to 1, defaults to 0.3. Lower values are more accurate, higher values are more creative."
+        },
+        "deepseek.MultiRoundConversationContext": {
+          "type": "boolean",
+          "default": true,
+          "description": "Choose to enable Multi-round Conversation for better context. Can slow down performance, but returns more accurate results. Defaults to true."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "deepseek-sidebar",
+          "title": "DeepSeek",
+          "icon": "src/assets/menu-icon.svg"
+        }
+      ]
+    },
+    "files": [
+      "out",
+      "src/assets"
+    ],
+    "views": {
+      "deepseek-sidebar": [
+        {
+          "type": "webview",
+          "id": "deepseek.chat",
+          "name": "Chat"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "deepseek-vscode.openChat",
+          "when": "view == deepseek.chat",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "deepseek-vscode.askDeepSeek",
+          "group": "navigation",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "openai": "^4.82.0",
+    "sinon": "^19.0.2"
+  }
+}

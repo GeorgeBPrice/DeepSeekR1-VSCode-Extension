@@ -1,0 +1,44 @@
+# Output directories
+out/
+dist/
+node_modules/
+
+# VS Code test directory
+.vscode-test/
+
+# Compiled and packaged files
+*.vsix
+
+# Logs and debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Temp files and build cache
+temp/
+.tmp/
+.cache/
+
+# Coverage reports
+coverage/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code workspace settings
+.vscode/
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS-specific temp files
+*.swp
+*.swo

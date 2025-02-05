@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>DeepSeek Chat</title>
+    <link rel="stylesheet" href="{{styleUri}}" />
+  </head>
+  <body>
+    <div class="chat-container">
+      <!-- Header with controls -->
+      <div class="chat-controls">
+        <button id="reset" class="reset-button" title="Reset conversation">
+          Reset
+        </button>
+      </div>
+
+      <div id="chat">
+        <div id="landing-message">
+          <img
+            src="{{imageLogo}}"
+            alt=""
+            width="100%"
+            style="vertical-align: middle; margin-right: 0.5em"
+          />
+          <p>
+            Welcome to the 'Self-Hosted DeepSeek R1' VSCode extension for
+            interacting with your locally hosted DeepSeek AI.
+            <i>This is an unofficial extension.</i>
+          </p>
+
+          <details>
+            <summary>Getting Started</summary>
+            <p>
+              1. Configure the extension, press <code>CTRL + ,</code> then
+              search for <code>DeepSeek.</code>. OR use the command
+              <code>CTRL + SHIFT + P</code> and type
+              <code>DeepSeek Config</code>
+            </p>
+            <p>
+              2. Open DeepSeek in the Sidebar
+              <code>CTRL + SHIFT + P</code> and type
+              <code>Show DeepSeek</code> to open the default chat panel.
+            </p>
+            <p>
+              OR. Open a floating window DeepSeek Chat, use command
+              <code>CTRL + SHIFT + P</code> and type
+              <code>DeepSeek Floating Chat</code> to open a Chat as a floating
+              window.
+            </p>
+            <p>
+              OR. Ask DeepSeek about selected Code, Highlight a block of code in
+              your editor, righ click and choose
+              <code>Ask DeepSeek</code>. Enter your question and use enter key
+              to send.
+            </p>
+          </details>
+
+          <details>
+            <summary>Hosting DeepSeek on Ollama</summary>
+            <p>
+              Ollama is a lightweight self-hosting solution for running AI
+              models locally. For setup instructions:
+              <a href="#" id="ollamaLink"
+                >How to run DeepSeek Locally on Ollama</a
+              >.
+            </p>
+          </details>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <textarea id="input" placeholder="Ask DeepSeek..." rows="3"></textarea>
+        <div class="button-container">
+          <button
+            id="stop"
+            class="stop-button"
+            style="display: none"
+            data-tooltip="Stop"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 22 22"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stop-icon-svg"
+            >
+              <!-- Center the square properly -->
+              <rect
+                x="5"
+                y="5"
+                width="14"
+                height="14"
+                rx="2"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <button id="send">Send</button>
+        </div>
+      </div>
+    </div>
+    <script src="{{scriptUri}}"></script>
+    <script src="{{markdownScriptUri}}"></script>
+  </body>
+</html>

@@ -1,0 +1,434 @@
+/* Base layout */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+}
+
+/* Chat container */
+#chat {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+/* Input area */
+#input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--vscode-input-border);
+  border-radius: 5px;
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  resize: vertical;
+  min-height: 60px;
+  font-family: Arial, sans-serif;
+}
+
+#send {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#send:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+/* Message styling */
+.message {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message:last-child {
+  margin-bottom: 0;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.bubble {
+  max-width: 90%;
+  padding: 10px;
+  border-radius: 10px;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.message.user .bubble {
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border-bottom-right-radius: 0;
+}
+
+.message.deepseek .bubble {
+  background-color: var(
+    --vscode-chat-background,
+    var(--vscode-input-background)
+  );
+  color: var(--vscode-input-foreground);
+  border-bottom-left-radius: 0;
+}
+
+.message.deepseek .code-block pre {
+  padding-bottom: 30px; /* Adds extra space at the bottom */
+}
+
+/* Paragraphs in bubbles */
+.bubble p {
+  margin: 0 0 10px 0;
+  line-height: 1.55;
+}
+
+.bubble p:last-child {
+  margin-bottom: 0;
+}
+
+/* Preformatted text block inside users message bubbles */
+.bubble pre {
+  margin: 0;
+  padding: 10px;
+  font-family: var(--vscode-editor-font-family);
+  font-size: var(--vscode-editor-font-size);
+  background-color: var(--vscode-editor-background);
+  color: var(--vscode-input-foreground);
+  border-radius: 5px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+/* stlises message label for user */
+.message-label {
+  font-size: 0.75em;
+  font-weight: bold;
+  color: var(--vscode-descriptionForeground);
+  position: absolute;
+  top: -17px;
+  right: 15px;
+  background-color: none;
+}
+.message {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* scrolls in users message */
+.scrollable-content {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Code block styling */
+.code-block {
+  position: relative;
+  margin: 10px 0;
+  background-color: var(--vscode-textCodeBlock-background);
+  border-radius: 6px;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.code-block code {
+  font-family: var(--vscode-editor-font-family);
+  font-size: var(--vscode-editor-font-size);
+  white-space: pre-wrap;
+  background-color: transparent;
+}
+
+/* Code block language label */
+.code-lang-label {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  font-size: 0.75em;
+  color: var(--vscode-descriptionForeground);
+  opacity: 0.7;
+}
+
+/* Code block buttons */
+.code-block button {
+  position: absolute;
+  bottom: 5px;
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: none;
+  border-radius: 3px;
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+
+.code-block button:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+.copy-button {
+  left: 5px;
+}
+
+.insert-button {
+  left: 60px;
+}
+
+/* Sender label */
+.sender {
+  font-size: 0.8em;
+  margin-bottom: 5px;
+  color: var(--vscode-descriptionForeground);
+}
+
+/* Status line */
+.status {
+  font-size: 0.8em;
+  color: var(--vscode-descriptionForeground);
+  margin-top: 5px;
+}
+
+/* Thinking indicator */
+.thinking {
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.loader {
+  border: 4px solid var(--vscode-editor-background);
+  border-top: 4px solid var(--vscode-button-background);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: 0 10px 0 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* AI Think section */
+.ai-think {
+  margin: 12px 0 8px 0;
+  color: var(--vscode-foreground);
+  opacity: 0.8;
+  width: 100%;
+}
+
+.ai-think summary {
+  cursor: pointer;
+  font-size: 0.9em;
+  color: var(--vscode-textLink-foreground);
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.ai-think summary:hover {
+  color: var(--vscode-textLink-activeForeground);
+}
+
+.ai-think p {
+  margin: 8px 0;
+  font-size: 0.9em;
+  line-height: 1.55em;
+  padding-left: 12px;
+  border-left: 2px solid var(--vscode-textLink-foreground);
+}
+
+.ai-think p:first-of-type {
+  margin-top: 12px;
+}
+
+.ai-think p:last-of-type {
+  margin-bottom: 4px;
+}
+
+/* handles code blocks in user messages */
+.message.user .code-block {
+  background-color: var(
+    --vscode-chat-background,
+    var(--vscode-input-background)
+  ) !important;
+}
+
+.message.user .code-block pre {
+  background-color: transparent;
+}
+
+/* Landing page summary, collapsed to make space for your messages yo! */
+#landing-message {
+  margin-bottom: 10px;
+}
+
+details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  cursor: pointer;
+  padding: 0.5em 0; /* Top and bottom padding remains */
+  padding-left: 20px; /* Add 20px padding to the left */
+  list-style: none;
+  font-size: 1em;
+  font-weight: bold;
+  border-bottom: 1px solid var(--vscode-input-border);
+  position: relative; /* Ensure relative positioning for absolute caret positioning */
+}
+/* Hide the browser’s default disclosure triangle */
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Add a custom caret icon using a pseudo-element */
+details > summary::after {
+  content: "\25B6";
+  font-size: 0.8em;
+  position: absolute;
+  left: 0px;
+  transition: transform 0.2s ease;
+}
+
+/* Rotate the caret when the section is open */
+details[open] > summary::after {
+  transform: rotate(90deg);
+}
+
+/* Optional: add some margin for the content below the summary */
+details > p {
+  margin: 1.5em 0.5em;
+  line-height: 1.55em;
+}
+
+/* Debug stuff */
+.debug-log {
+  font-size: 0.8em;
+  color: var(--vscode-descriptionForeground);
+  opacity: 0.7;
+  margin: 5px 0;
+  padding: 5px;
+  background-color: var(--vscode-input-background);
+  border-radius: 4px;
+}
+
+/* Button styles */
+.reset-button {
+  position: absolute;
+  display: none; /* Hidden by default, only shows after first message */
+  padding: 4px;
+  top: 10px;
+  right: 10px;
+  font-size: 9px;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: var(--vscode-button-hoverBackground);
+  color: var(--vscode-button-hoverForeground);
+  transform: scale(1.1);
+}
+
+.landing-message {
+  font-size: 1em;
+  color: var(--vscode-descriptionForeground);
+  margin: 5px 0;
+  padding: 15px;
+  background-color: var(--vscode-input-background);
+  border-radius: 4px;
+  max-width: 80%;
+}
+
+/* Needs a little clean up, but works */
+.stop-button {
+  position: absolute;
+  bottom: 100px;
+  right: 30px;
+  width: 34px;
+  height: 32px;
+  background-color: var(--vscode-button-background);
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stop-button:hover {
+  box-shadow: 0 0 5px 1px rgba(162, 0, 0, 0.544);
+  background-color: rgb(255, 179, 179);
+}
+
+.stop-icon-svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.stop-icon-svg:hover {
+  fill: rgb(255, 203, 203);
+}
+
+.stop-button:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+}
+
+.stop-button:hover::after {
+  opacity: 1;
+}
+
+/* When STOP is pressed or reponse interupted */
+.error-message {
+  font-size: 1em;
+  color: var(--vscode-descriptionForeground);
+  margin: 5px 0;
+  padding: 15px;
+  background-color: var(--vscode-input-warningBackground);
+  border-radius: 4px;
+  max-width: 80%;
+}
