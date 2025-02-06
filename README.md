@@ -36,14 +36,31 @@
 
 ## Installation
 
-1. **Clone or Download Extension** this repository, or install from the VSCode Marketplace (if/when published).
+1. **Clone or Download Extension**:
+Download this repository to test or deploy locally. Maybe install it from the VSCode Marketplace (if/when published).
 
-- If testing the downloaded extension locally:
+- To quickly test the downloaded extension repository, locally:
   1. **Open** the folder in VSCode.
   2. **Run** `npm install` to install dependencies.
   3. **Build** the extension: `npm run compile`.
   4. **Launch** the extension by pressing `F5` or via “Run Extension” in VSCode’s debug panel.
-
+ 
+- To deploy the extension for use locally, in any VSCode window:
+  1. **Install vsce**:
+      ```bash
+      npm install -g @vscode/vsce
+      ```
+  2. **Run the packaging command** `:
+      ```bash
+      vsce package
+      ```
+  3. **Install the .vsix File Locally**:
+      ```bash
+      vsce package
+      ```
+  4. **Run the Command Palette**: open command with <kbd>Ctrl+Shift+P</kbd> or <kbd>Cmd+Shift+P</kbd> on macOS. Type and select Extensions: `Install from VSIX...`. Locate and select the DeepSeek .vsix file (e.g., deepseek-gp-vscode-0.1.0.vsix).
+  5. **Verify the Extension Installation**: Open the Extensions view, command <kbd>Ctrl+Shift+X</kbd> or <kbd>Cmd+Shift+X</kbd> on macOS. Find the DeepSeek extension in the list. It should now be installed and enabled. Enjoy!
+     
 <br/>
 
 2. **Run DeepSeek Locally on Ollama**:
@@ -142,7 +159,7 @@ To bring up VSCode Command, use hotkeys <kbd>CTRL + SHIFT + P</kbd> and then typ
 
 ## Known Issues
 
-- **Ask DeepSeek**: There is an issue where when using this 'right click' menu command, the request goes into the floating chat window, eve nif the sidebar chat is open.
+- **Ask DeepSeek**: There is an issue where when using this 'right click' menu command, the request goes into the floating chat window, even when the sidebar chat is open.
 - **Model Startup Time**: Larger models (especially self-hosted) can have warm-up delays, more a compute issue...
 
 <br/>
@@ -150,9 +167,9 @@ To bring up VSCode Command, use hotkeys <kbd>CTRL + SHIFT + P</kbd> and then typ
 ## Improvements Coming
 
 - **Improve Error Responses**: Stylise and inject error messages into the chat in a nice bubble message format, provide better error messaging too.
-- **Ask DeepSeek**: Will fix the know issue mentioned above _AND_ will also add a message with user selected-text to the chat window, so users can keep tabs.
-- **Improve User Message Styling**: Will add a decent regex or library to detect code in the users requests, and output the users messages nicely.
-- **Multi Window Sessions**: I am looking at ways to create a session for window, that keeps the chat message context seperate, and a local history. Possibly also storing closed chats.
+- **Ask DeepSeek**: Will fix the known issue mentioned above _AND_ will also add a message with user selected-text to the chat window, so users can keep tabs.
+- **Improve User Message Styling**: Will add a decent regex or library to detect code in the users requests, and output the user's messages nicely.
+- **Multi Window Sessions**: I am looking at ways to create a session for window, that keeps the chat message context separate, and a local history. Possibly also storing closed chats.
 
 <br/>
 
@@ -161,7 +178,7 @@ To bring up VSCode Command, use hotkeys <kbd>CTRL + SHIFT + P</kbd> and then typ
 ### 0.1.0
 
 - Initial release of 'Self-Hosted DeepSeek R1' for VSCode.
-- Chat in sidebar & floating window; streamed responses with multi question context; code block insertions via right click menu. Support for cloud and locally hosted models.
+- Chat in sidebar & floating window; streamed responses with multi-question-context; code block insertions via right click menu. Support for cloud and locally hosted models.
 
 ### 0.1.1
 
