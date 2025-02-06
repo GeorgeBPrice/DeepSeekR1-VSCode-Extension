@@ -50,15 +50,15 @@ Download this repository to test or deploy locally. Maybe install it from the VS
       ```bash
       npm install -g @vscode/vsce
       ```
-  2. **Run the packaging command** `:
+  2. **Navigate to the DeepSeek extension**:
       ```bash
-      vsce package
+      cd path/to/deepseek/extension-folder
       ```
   3. **Install the .vsix File Locally**:
       ```bash
       vsce package
       ```
-  4. **Run the Command Palette**: open command with <kbd>Ctrl+Shift+P</kbd> or <kbd>Cmd+Shift+P</kbd> on macOS. Type and select Extensions: `Install from VSIX...`. Locate and select the DeepSeek .vsix file (e.g., deepseek-gp-vscode-0.1.0.vsix).
+  4. **Install the .vsix File Locally**: open command palette with <kbd>Ctrl+Shift+P</kbd> or <kbd>Cmd+Shift+P</kbd> on macOS. Type and select `Extensions: Install from VSIX...`. Locate and select the DeepSeek .vsix file (e.g., deepseek-gp-vscode-0.1.0.vsix), output by the package command.
   5. **Verify the Extension Installation**: Open the Extensions view, command <kbd>Ctrl+Shift+X</kbd> or <kbd>Cmd+Shift+X</kbd> on macOS. Find the DeepSeek extension in the list. It should now be installed and enabled. Enjoy!
      
 <br/>
@@ -85,11 +85,11 @@ Download this repository to test or deploy locally. Maybe install it from the VS
       ollama run deepseek-r1:7b
       ```
     - Default port is `11434`, otherwise linux and mac users can choose your preferred port, see guide.
-    - You may also need to start the server in a new terminal, enjoy the output:
+    - You will also need to start the Ollama interface server **in a new terminal** to interact with DeepSeek:
       ```bash
       ollama serve
       ```
-    - For help run `ollama -h'.
+    - For help run `ollama -h', or see trouble shooting section in the `How to run DeepSeek Locally on Ollama.md` guide.
 
 ## Configuration
 
