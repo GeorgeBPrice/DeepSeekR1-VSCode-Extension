@@ -2,7 +2,7 @@
   "name": "deepseek-gp-vscode",
   "displayName": "deepseek-gp-vscode",
   "description": "Prompt Created by DeepSeek and GBP, Integrates DeepSeek into VSCode",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -105,6 +105,11 @@
       ]
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GeorgeBPrice/DeepSeekR1-VSCode-Extension.git"
+  },
+  "license": "CC-BY-ND-4.0",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -125,8 +130,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "axios": "^1.7.9",
-    "openai": "^4.82.0",
-    "sinon": "^19.0.2"
+    "abort-controller": "^3.0.0",
+    "axios": "^1.7.9"
   }
 }
