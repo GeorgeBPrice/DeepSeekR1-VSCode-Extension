@@ -2,7 +2,7 @@
   "name": "deepseek-gp-vscode",
   "displayName": "deepseek-gp-vscode",
   "description": "Prompt Created by DeepSeek and GBP, Integrates DeepSeek into VSCode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -78,7 +78,7 @@
           "type": "string",
           "default": "http://localhost:11434",
           "description": "Change to suit your URL, otherwise this is the default runner URL for Ollama, defaults to http://localhost:11434."
-        },        
+        },
         "deepseek.aiR1ModelTemperature": {
           "type": "number",
           "default": 0.3,
