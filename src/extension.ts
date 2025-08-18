@@ -46,6 +46,9 @@ let currentAbortController: AbortController | null = null;
 let chatPanel: vscode.WebviewPanel | undefined = undefined;
 let conversationHistory: { role: string; content: string }[] = [];
 let extensionContext: vscode.ExtensionContext;
+// Keep a reference to the registered sidebar provider so we can target the
+// existing sidebar view instead of creating a new provider instance.
+let registeredSidebarProvider: SidebarProvider | undefined;
 
 /**
  * The entry point for the DeepSeek VSCode extension.
@@ -68,6 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.registerWebviewViewProvider("deepseek.chat", sidebarProvider, {
     webviewOptions: { retainContextWhenHidden: true },
   });
+  registeredSidebarProvider = sidebarProvider;
 
   const commands = [
     /**
@@ -162,12 +166,17 @@ async function handlePanelMessage(panel: vscode.WebviewPanel, message: string) {
   });
   panel.webview.postMessage({ command: "addThinking" });
 
-  const response = await sendToDeepSeek(message, panel);
-  panel.webview.postMessage({
-    command: "addMessage",
-    text: response,
-    sender: "deepseek",
-  });
+  try {
+    const response = await sendToDeepSeek(message, panel);
+    panel.webview.postMessage({
+      command: "addMessage",
+      text: response,
+      sender: "deepseek",
+    });
+  } catch (error: any) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    panel.webview.postMessage({ command: "error", error: errorMessage });
+  }
 }
 
 /**
@@ -177,11 +186,11 @@ async function handlePanelMessage(panel: vscode.WebviewPanel, message: string) {
 async function sendToInterface(message: string) {
   // Get the existing sidebar provider instance
   const sidebarProvider = getSidebarProvider();
-  const sidebarView = sidebarProvider.getView();
+  const sidebarView = sidebarProvider?.getView();
   const isSidebarVisible = sidebarView?.visible;
 
   if (isSidebarVisible) {
-    await sidebarProvider.sendMessage(message);
+    await sidebarProvider!.sendMessage(message);
   } else if (chatPanel?.visible) {
     await handlePanelMessage(chatPanel, message);
   } else {
@@ -192,7 +201,7 @@ async function sendToInterface(message: string) {
 
 // Add helper function to get sidebar provider
 function getSidebarProvider(): SidebarProvider {
-  return new SidebarProvider(extensionContext.extensionUri);
+  return registeredSidebarProvider as SidebarProvider;
 }
 
 /**
@@ -269,12 +278,18 @@ function setupWebviewListeners(panel: vscode.WebviewPanel) {
     switch (message.command) {
       case "sendMessage":
         panel.webview.postMessage({ command: "addThinking" });
-        const response = await sendToDeepSeek(message.text, panel);
-        panel.webview.postMessage({
-          command: "addMessage",
-          text: response,
-          sender: "deepseek",
-        });
+        try {
+          const response = await sendToDeepSeek(message.text, panel);
+          panel.webview.postMessage({
+            command: "addMessage",
+            text: response,
+            sender: "deepseek",
+          });
+        } catch (error: any) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          panel.webview.postMessage({ command: "error", error: errorMessage });
+        }
         break;
       case "insertCode":
         await focusActiveEditorThenInsert(message.code);
@@ -412,11 +427,7 @@ export async function sendToDeepSeek(
   } catch (error) {
     currentAbortController = null;
     const errorMessage = handleError(error);
-    panelOrSidebar.webview.postMessage({
-      command: "error",
-      error: errorMessage,
-    });
-    return errorMessage;
+    throw new Error(errorMessage);
   }
 }
 
@@ -436,7 +447,9 @@ function prepareRequest(
   const apiKey = config.get<string>("optionalCloudApiKey");
   const selfHostedUrl =
     config.get<string>("aiR1SelfHostedUrl") || "http://localhost:11434";
-  const model = config.get<string>("aiR1Model") || "deepseek-r1:7b";
+  // Single-setting model selection: when not 'custom' use the selected tag, otherwise
+  // fall back to the free-form model field.
+  const model = config.get<string>("modelSelection") || "deepseek-r1:7b";
   const temperature = parseFloat(
     config.get<string>("aiR1ModelTemperature") || "0.3"
   );

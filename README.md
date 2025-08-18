@@ -30,7 +30,7 @@
 5. **Configurable for Cloud or Self-Hosted**
    - Provide a DeepSeek API Key (if using cloud).
    - Set your local hosting URL (for self-hosted).
-   - Supports custom model names and temperatures.
+   - Choose from popular local model families and sizes (Ollama), or specify a custom model tag via the `deepseek.modelSelection` setting (see Configuration below)
 
 <br/>
 
@@ -72,17 +72,29 @@ Download this repository to test or deploy locally. Maybe install it from the VS
     - Visit the [Ollama website](https://ollama.com) to download the installer for your operating system.
     - Run the installer and follow the instructions to complete the installation.
 
-2.  **Install DeepSeek R1**:
+2.  **Install a model**:
 
-    - Open a terminal and run the following command to install DeepSeek R1, for example 7 Billion version, pick your own model depending on your compute power, 7b and 14b are popular for mid-level systems:
+    - You can use any supported chat/coding capable model. Popular choices include:
+      - DeepSeek Reasoning: `deepseek-r1` (sizes: 1.5b, 7b, 14b, 32b, 70b)
+      - Llama 3.1 Chat: `llama3.1` (sizes: 8b, 70b)
+      - Qwen 2.5 Coder: `qwen2.5-coder` (sizes: 0.5b, 1.5b, 3b, 7b, 14b, 32b)
+      - Qwen 2.5 Chat: `qwen2.5` (sizes: 7b, 14b, 32b, 72b)
+      - Mistral: `mistral` (sizes: 7b, 12b)
+      - Gemma 2: `gemma2` (sizes: 2b, 9b, 27b)
+
+    - Example installations:
       ```bash
-      ollama install deepseek-r1:7b
+      ollama pull deepseek-r1:7b
+      ollama pull llama3.1:8b
+      ollama pull qwen2.5-coder:7b
+      ollama pull mistral:7b
+      ollama list
       ```
 
 3.  **Run the Server**:
-    - In the terminal, execute the following command to start the DeepSeek R1 server:
+    - In the terminal, execute the following command to start your selected model server:
       ```bash
-      ollama run deepseek-r1:7b
+      ollama run llama3.1:8b
       ```
     - Default port is `11434`, otherwise linux and mac users can choose your preferred port, see guide.
     - You will also need to start the Ollama interface server **in a new terminal** to interact with DeepSeek:
@@ -106,9 +118,10 @@ Or if testing the repository, open your user/workspace `settings.json` and defin
 | Setting                                  | Type      | Default                    | Description                                                                        |
 | ---------------------------------------- | --------- | -------------------------- | ---------------------------------------------------------------------------------- |
 | `deepseek.accountType`                   | `string`  | `self-hosted`              | Either `"cloud"` or `"self-hosted"`.                                               |
+| `deepseek.modelSelection`                | `string`  | `deepseek-r1:7b`           | Select one curated local model tag (e.g., `deepseek-r1:7b`, `llama3.1:8b`, `qwen2.5-coder:7b`). |
 | `deepseek.optionalCloudApiKey`           | `string`  | `"Only for cloud..."`      | Your DeepSeek API key (if `accountType` is `cloud`).                               |
 | `deepseek.aiR1SelfHostedUrl`             | `string`  | `"http://localhost:11434"` | Local server URL if hosting your own instance (Ollama or another method).          |
-| `deepseek.aiR1Model`                     | `string`  | `"deepseek-r1:7b"`         | The model name to use (e.g. `deepseek-r1:14b`).                                    |
+| `deepseek.aiR1Model`                     | —         | —                          | Removed. Use `deepseek.modelSelection` instead. |
 | `deepseek.aiR1ModelTemperature`          | `number`  | `0.3`                      | Ranges roughly 0.0 – 1.0, lower is more literal, higher is more creative.          |
 | `deepseek.MultiRoundConversationContext` | `boolean` | `true`                     | Toggles conversation context (can slow down responses for 'low resource systems'). |
 
@@ -159,7 +172,6 @@ To bring up VSCode Command, use hotkeys <kbd>CTRL + SHIFT + P</kbd> and then typ
 
 ## Known Issues
 
-- **Ask DeepSeek**: There is an issue where when using this 'right click' menu command, the request goes into the floating chat window, even when the sidebar chat is open.
 - **Model Startup Time**: Larger models (especially self-hosted) can have warm-up delays, more a compute issue...
 
 <br/>

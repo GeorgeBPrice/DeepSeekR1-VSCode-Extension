@@ -161,6 +161,7 @@
       case "error":
         handleError(data.error);
         setStopButtonVisibility(false);
+        isStreaming = false;
         break;
 
       case "addDebugLog":

@@ -2,7 +2,7 @@
   "name": "deepseek-gp-vscode",
   "displayName": "deepseek-gp-vscode",
   "description": "Prompt Created by DeepSeek and GBP, Integrates DeepSeek into VSCode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -30,6 +30,36 @@
     "configuration": {
       "title": "DeepSeek",
       "properties": {
+        "deepseek.modelSelection": {
+          "type": "string",
+          "enum": [
+            "deepseek-r1:1.5b",
+            "deepseek-r1:7b",
+            "deepseek-r1:14b",
+            "deepseek-r1:32b",
+            "deepseek-r1:70b",
+            "llama3.1:8b",
+            "llama3.1:70b",
+            "qwen2.5-coder:0.5b",
+            "qwen2.5-coder:1.5b",
+            "qwen2.5-coder:3b",
+            "qwen2.5-coder:7b",
+            "qwen2.5-coder:14b",
+            "qwen2.5-coder:32b",
+            "qwen2.5:7b",
+            "qwen2.5:14b",
+            "qwen2.5:32b",
+            "qwen2.5:72b",
+            "mistral:7b",
+            "mistral:12b",
+            "gemma2:2b",
+            "gemma2:9b",
+            "gemma2:27b",
+            "phi4-mini-reasoning"
+          ],
+          "default": "deepseek-r1:7b",
+          "description": "Select a single curated Ollama model tag (family:size)."
+        },
         "deepseek.accountType": {
           "type": "string",
           "enum": [
@@ -48,11 +78,6 @@
           "type": "string",
           "default": "http://localhost:11434",
           "description": "Change to suit your URL, otherwise this is the default runner URL for Ollama, defaults to http://localhost:11434."
-        },
-        "deepseek.aiR1Model": {
-          "type": "string",
-          "default": "deepseek-r1:7b",
-          "description": "Specify the DeepSeek model you are using (e.g., deepseek-r1:14b), defaults to deepseek-r1:7b."
         },
         "deepseek.aiR1ModelTemperature": {
           "type": "number",
