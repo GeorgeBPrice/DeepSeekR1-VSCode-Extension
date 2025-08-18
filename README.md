@@ -187,16 +187,22 @@ To bring up VSCode Command, use hotkeys <kbd>CTRL + SHIFT + P</kbd> and then typ
 
 ## Release Notes
 
-### 0.1.0
+### 0.1.2
 
-- Initial release of 'Self-Hosted DeepSeek R1' for VSCode.
-- Chat in sidebar & floating window; streamed responses with multi-question-context; code block insertions via right click menu. Support for cloud and locally hosted models.
+- Multiple AI model support added to Deepseek configuration options.
+- Fixed a bug where the "AskDeepSeek" right click feature would not push the request to the floating chat window. Now either window, when opened, will receive Deepseek's right click chat request from your code.
+- Improved error handling for the Deepseek floating window.
 
 ### 0.1.1
 
 - Auto-scrolling for large blocks.
 - Expandable “View AI Thought Process” section, cleans up the chat window.
 - Added **Stop** functionality to abort streaming output.
+
+### 0.1.0
+
+- Initial release of 'Self-Hosted DeepSeek R1' for VSCode.
+- Chat in sidebar & floating window; streamed responses with multi-question-context; code block insertions via right click menu. Support for cloud and locally hosted models.
 
 <br/>
 
