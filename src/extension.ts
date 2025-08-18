@@ -166,12 +166,17 @@ async function handlePanelMessage(panel: vscode.WebviewPanel, message: string) {
   });
   panel.webview.postMessage({ command: "addThinking" });
 
-  const response = await sendToDeepSeek(message, panel);
-  panel.webview.postMessage({
-    command: "addMessage",
-    text: response,
-    sender: "deepseek",
-  });
+  try {
+    const response = await sendToDeepSeek(message, panel);
+    panel.webview.postMessage({
+      command: "addMessage",
+      text: response,
+      sender: "deepseek",
+    });
+  } catch (error: any) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    panel.webview.postMessage({ command: "error", error: errorMessage });
+  }
 }
 
 /**
@@ -273,12 +278,18 @@ function setupWebviewListeners(panel: vscode.WebviewPanel) {
     switch (message.command) {
       case "sendMessage":
         panel.webview.postMessage({ command: "addThinking" });
-        const response = await sendToDeepSeek(message.text, panel);
-        panel.webview.postMessage({
-          command: "addMessage",
-          text: response,
-          sender: "deepseek",
-        });
+        try {
+          const response = await sendToDeepSeek(message.text, panel);
+          panel.webview.postMessage({
+            command: "addMessage",
+            text: response,
+            sender: "deepseek",
+          });
+        } catch (error: any) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          panel.webview.postMessage({ command: "error", error: errorMessage });
+        }
         break;
       case "insertCode":
         await focusActiveEditorThenInsert(message.code);
@@ -416,11 +427,7 @@ export async function sendToDeepSeek(
   } catch (error) {
     currentAbortController = null;
     const errorMessage = handleError(error);
-    panelOrSidebar.webview.postMessage({
-      command: "error",
-      error: errorMessage,
-    });
-    return errorMessage;
+    throw new Error(errorMessage);
   }
 }
 
